@@ -6,7 +6,6 @@ from sentence_transformers import SentenceTransformer
 
 import os
 
-# 1. Încarcă fișiere din folderul 'data'
 docs = []
 data_path = os.path.join(os.path.dirname(__file__), "data")
 for filename in os.listdir(data_path):
@@ -17,15 +16,11 @@ for filename in os.listdir(data_path):
         loader = Docx2txtLoader(os.path.join(data_path, filename))
         docs.extend(loader.load())
 
-# 2. Spargere în bucăți
 splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 chunks = splitter.split_documents(docs)
 
-# 3. Creează embeddings
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-MiniLM-L3-v2")
 
-
-# 4. Salvează în Chroma vector store
 db = Chroma.from_documents(
     documents=chunks,
     embedding=embedding_model,

@@ -1,6 +1,4 @@
 ﻿import os
-
-# Importuri corecte conform noilor pachete recomandate
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaLLM
