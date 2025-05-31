@@ -1,11 +1,13 @@
 ﻿import os
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
-from langchain_ollama import OllamaLLM
 from langchain_community.document_loaders import PyPDFLoader
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain.chains import RetrievalQA
 
-folder_path = os.path.join(os.path.dirname(__file__), "data")
-
+folder_path = "D:\\HackTm2025\\data"
 if not os.path.exists(folder_path):
     raise Exception(f"Folderul '{folder_path}' nu există. Creează-l și pune acolo PDF-uri.")
 
@@ -16,18 +18,39 @@ for filename in os.listdir(folder_path):
         documents.extend(loader.load())
 
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-vectorstore = Chroma(persist_directory="embeddings", embedding_function=embedding_model)
+
+vectorstore = Chroma(
+    persist_directory="embeddings",
+    embedding_function=embedding_model
+)
 vectorstore.add_documents(documents)
 
 llm = OllamaLLM(model="mistral")
 
-from langchain.chains import RetrievalQA
-qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever())
+prompt_template = ChatPromptTemplate.from_template("""
+Folosește doar informațiile din contextul de mai jos pentru a răspunde la întrebare în limba română. Nu inventa răspunsuri.
 
-print("Întreabă chatbot-ul (scrie 'exit' pentru a ieși):")
+Context:
+{context}
+
+Întrebare:
+{question}
+
+Răspuns:
+""")
+
+qa = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type="stuff",
+    retriever=vectorstore.as_retriever(),
+    chain_type_kwargs={"prompt": prompt_template},
+    return_source_documents=False
+)
+
+print("✅ Chatbot-ul juridic e gata. Scrie o întrebare sau 'exit' pentru a ieși.")
 while True:
-    query = input("Întrebare: ")
-    if query.lower() == "exit":
+    query = input("\nÎntrebare: ")
+    if query.lower() in ["exit", "quit"]:
         break
-    response = qa.invoke({"query": query})
-    print("Răspuns:", response["result"])
+    result = qa.invoke({"query": query})
+    print("📘 Răspuns:", result["result"])
