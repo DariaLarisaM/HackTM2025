@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chat AI - PDF Q&A</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        #chat {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .user-msg {
+            color: blue;
+            margin: 5px 0;
+        }
+
+        .bot-msg {
+            color: green;
+            margin: 5px 0;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chat AI cu PDF Q&A</h1>
+    <div id="chat"></div>
+
+    <input type="text" id="input" placeholder="Scrie întrebarea ta..." />
+    <button onclick="sendQuery()">Trimite</button>
+
+    <script>
+        const chat = document.getElementById('chat');
+        const input = document.getElementById('input');
+
+        async function sendQuery() {
+            const query = input.value.trim();
+            if (!query) return;
+
+            appendMessage('Tu: ' + query, 'user-msg');
+            input.value = '';
+            input.disabled = true;
+
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    appendMessage('Bot: ' + data.answer, 'bot-msg');
+                } else {
+                    appendMessage('Eroare: ' + (data.error || 'Răspuns invalid'), 'bot-msg');
+                }
+            } catch (error) {
+                appendMessage('Eroare la comunicare cu serverul.', 'bot-msg');
+            } finally {
+                input.disabled = false;
+                input.focus();
+            }
+        }
+
+        function appendMessage(text, className) {
+            const p = document.createElement('p');
+            p.textContent = text;
+            p.className = className;
+            chat.appendChild(p);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendQuery();
+            }
+        });
+    </script>
+
+</body>
+</html>
