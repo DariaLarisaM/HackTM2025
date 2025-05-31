@@ -1,0 +1,4 @@
+C:\Users\Cassandra\source\repos\TestDataBase\TestDataBase\obj\Debug\TestDataBase.csproj.AssemblyReference.cache
+C:\Users\Cassandra\source\repos\TestDataBase\TestDataBase\obj\Debug\TestDataBase.csproj.CoreCompileInputs.cache
+D:\HackTM2025\TestDataBase\TestDataBase\obj\Debug\TestDataBase.csproj.AssemblyReference.cache
+D:\HackTM2025\TestDataBase\TestDataBase\obj\Debug\TestDataBase.csproj.CoreCompileInputs.cache

@@ -2,26 +2,50 @@
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>LawHelp</title>
+    <meta name="description" content="AI legal assistant for Romania">
+    <meta name="keywords" content="law, legal, assistant, AI, Romania">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Swiper CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css" rel="stylesheet">
 
     <style>
-        .user-msg {
-            color: blue;
-            margin: 5px 0;
+        :root {
+            --primary-blue: #004080;
+            --light-blue: #005cbf;
+            --accent-yellow: #ffcc00;
+            --light-bg: #f0f4ff;
+            --text-dark: #003366;
+            --text-gray: #444;
         }
 
-        .bot-msg {
-            color: green;
-            margin: 5px 0;
-        }
-    </style>
-
-    <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
         }
-    </style>
 
-    <style>
+        /* Header Styles */
+        .header-custom {
+            background-color: var(--primary-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
         .btn-nav-white {
             background-color: transparent;
             color: #ffffff;
@@ -30,323 +54,1251 @@
             border-radius: 8px;
             font-weight: bold;
             text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
+            margin: 0 5px;
         }
 
-            .btn-nav-white:hover {
-                background-color: #ffffff;
-                color: #004080;
-            }
-
+            .btn-nav-white:hover,
             .btn-nav-white.active {
                 background-color: #ffffff;
-                color: #004080;
+                color: var(--primary-blue);
+                text-decoration: none;
             }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 100px;
+            text-align: center;
+        }
+
+        .hero-content {
+            transform: translateY(-50px);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        .btn-start {
+            background-color: var(--accent-yellow);
+            color: #000;
+            font-weight: bold;
+            font-size: 1.4rem;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+            .btn-start:hover {
+                background-color: #e6b800;
+                color: #000;
+                text-decoration: none;
+                transform: translateY(-2px);
+            }
+
+        /* Forms Section */
+        .forms-section {
+            min-height: 100vh;
+            background-color: #f0f4ff;
+            padding: 100px 20px 40px;
+        }
+
+        /* Swiper Styles for Forms */
+        .forms-swiper {
+            padding: 40px 0 80px 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+            .forms-swiper .swiper-wrapper {
+                align-items: stretch;
+            }
+
+            .forms-swiper .swiper-slide {
+                height: auto;
+                display: flex;
+            }
+
+        .form-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+            .form-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            }
+
+        .form-card-icon {
+            font-size: 3rem;
+            color: var(--light-blue);
+            margin-bottom: 15px;
+        }
+
+        .form-card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .form-card-description {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .download-btn {
+            background-color: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+            .download-btn:hover {
+                background-color: var(--primary-blue);
+                color: white;
+                text-decoration: none;
+            }
+
+            .download-btn:disabled {
+                background-color: #28a745;
+                cursor: not-allowed;
+            }
+
+        /* Custom Swiper Navigation */
+        .swiper-button-next,
+        .swiper-button-prev {
+            background: var(--light-blue);
+            border-radius: 50%;
+            width: 50px !important;
+            height: 50px !important;
+            margin-top: -25px;
+            color: white !important;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+            .swiper-button-next:hover,
+            .swiper-button-prev:hover {
+                background: var(--primary-blue);
+                transform: scale(1.1);
+            }
+
+            .swiper-button-next:after,
+            .swiper-button-prev:after {
+                font-size: 18px !important;
+            }
+
+        .swiper-button-next {
+            right: 20px;
+        }
+
+        .swiper-button-prev {
+            left: 20px;
+        }
+
+        /* Custom Pagination */
+        .swiper-pagination-bullet {
+            background: var(--light-blue);
+            opacity: 0.3;
+            width: 12px;
+            height: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            transform: scale(1.2);
+            background: var(--primary-blue);
+        }
+
+        .swiper-pagination {
+            bottom: 20px !important;
+        }
+
+        /* Documents Upload Section */
+        .documents-section {
+            min-height: 100vh;
+            background-color: var(--light-bg);
+            padding: 100px 20px 40px;
+        }
+
+        .upload-form {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .upload-btn {
+            background-color: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 14px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+            .upload-btn:hover {
+                background-color: var(--primary-blue);
+            }
+
+        .document-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+            .document-box:hover {
+                box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+                transform: translateY(-2px);
+            }
+
+        .document-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .document-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .document-info {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin: 5px 0;
+        }
+
+        .document-type {
+            background-color: var(--light-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .remove-document {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+            .remove-document:hover {
+                background-color: #dc3545;
+                color: white;
+            }
+
+        /* AI Assistant Section */
+        .assistant-section {
+            min-height: 100vh;
+            background-color: var(--light-bg);
+            padding: 140px 20px 100px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            height: 800px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .chat-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .chat-upload-btn {
+            background-color: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+            .chat-upload-btn:hover {
+                background-color: #e6b800;
+            }
+
+        .chat-box {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+            flex: 1;
+            min-height: 0;
+            max-height: 600px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: var(--light-blue);
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #e9ecef;
+            color: #333;
+            margin-right: auto;
+        }
+
+        .input-group-custom {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+            .message-input:focus {
+                border-color: var(--light-blue);
+                box-shadow: 0 0 0 2px rgba(0, 92, 191, 0.2);
+            }
+
+        .send-btn {
+            background-color: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .send-btn:hover:not(:disabled) {
+                background-color: var(--primary-blue);
+            }
+
+            .send-btn:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            color: var(--text-gray);
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        .footer-custom {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Hidden file input */
+        .hidden-file-input {
+            display: none;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--light-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Alert styles */
+        .alert-custom {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .btn-start {
+                font-size: 1.2rem;
+                padding: 12px 25px;
+            }
+
+            .chat-container {
+                padding: 20px;
+                height: 400px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .chat-box {
+                max-height: 250px;
+            }
+
+            .form-card {
+                margin-bottom: 20px;
+            }
+
+            .swiper-button-next,
+            .swiper-button-prev {
+                width: 40px !important;
+                height: 40px !important;
+                margin-top: -20px;
+            }
+
+                .swiper-button-next:after,
+                .swiper-button-prev:after {
+                    font-size: 14px !important;
+                }
+
+            .document-box {
+                padding: 15px;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Section Padding for Fixed Header */
+        section {
+            scroll-margin-top: 100px;
+        }
+
+        /* Specific scroll margin for assistant section */
+        #assistant {
+            scroll-margin-top: -20px;
+        }
     </style>
-
-    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>LawHelp</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-
-    <!-- Favicons -->
-    <link href="static/img/favicon.png" rel="icon">
-    <link href="static/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="static/vendor/aos/aos.css" rel="stylesheet">
-    <link href="static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Main CSS File -->
-    <link href="static/css/main.css" rel="stylesheet">
-
 </head>
 
-<script>
-    const chat = document.getElementById('chat');
-    const input = document.getElementById('input');
-
-    async function sendQuery() {
-        const query = input.value.trim();
-        if (!query) return;
-
-        appendMessage('Tu: ' + query, 'user-msg');
-        input.value = '';
-        input.disabled = true;
-
-        try {
-            const response = await fetch('/ask', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query })
-            });
-            const data = await response.json();
-
-            if (response.ok) {
-                appendMessage('Bot: ' + data.answer, 'bot-msg');
-            } else {
-                appendMessage('Eroare: ' + (data.error || 'Răspuns invalid'), 'bot-msg');
-            }
-        } catch (error) {
-            appendMessage('Eroare la comunicare cu serverul.', 'bot-msg');
-        } finally {
-            input.disabled = false;
-            input.focus();
-        }
-    }
-
-    function appendMessage(text, className) {
-        const p = document.createElement('p');
-        p.textContent = text;
-        p.className = className;
-        chat.appendChild(p);
-        chat.scrollTop = chat.scrollHeight;
-    }
-
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendQuery();
-        }
-    });
-</script>
-
-
-<body class="acasa-page">
-
-    <header id="header" class="fixed-top" style="background-color: #004080; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px 0;">
+<body>
+    <!-- Header -->
+    <header class="header-custom">
         <div class="container-fluid d-flex align-items-center justify-content-between px-5">
-
-
-            <!-- LawHelp text stânga -->
-            <a href="acasa.html" class="logo">
-                <h1 style="font-size: 1.8rem; font-weight: bold; color: #ffffff; margin: 0;">LawHelp</h1>
+            <a href="#hero" class="logo text-decoration-none">
+                <h1>LawHelp</h1>
             </a>
 
-            <!-- Navigație dreapta cu butoane albe -->
-            <nav id="navbar" class="navbar" style="margin-left: auto;">
-                <ul style="display: flex; gap: 15px; list-style: none; margin: 0; padding: 0;">
-                    <li><a href="#hero" class="btn-nav-white">Acasă</a></li>
-                    <li><a href="#documente" class="btn-nav-white">Documentele mele</a></li>
-                    <li><a href="http://127.0.0.1:5000" class="btn-nav-white">Asistent</a></li>
+            <nav class="navbar">
+                <ul class="d-flex gap-3 list-unstyled m-0 p-0">
+                    <li><a href="#hero" class="btn-nav-white">Home</a></li>
+                    <li><a href="#forms" class="btn-nav-white">Forms</a></li>
+                    <li><a href="#documents" class="btn-nav-white">Documents</a></li>
+                    <li><a href="#assistant" class="btn-nav-white">Assistant</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Welcome to <span style="color: var(--light-blue);">LawHelp</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Your digital assistant helps you <strong>avoid going to government offices</strong> and provides clear legal answers.
+                    </p>
 
+                    <a href="#assistant" class="btn-start">
+                        Start Now
+                    </a>
 
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
-        <a href="acasa.html" class="logo d-flex align-items-center me-auto">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="static/img/logo.webp" alt=""> -->
-            <h1 class="sitename">LawHelp</h1>
-        </a>
-
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="#hero" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li class="dropdown">
-                    <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul>
-                        <li><a href="#">Dropdown 1</a></li>
-                        <li class="dropdown">
-                            <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Dropdown 1</a></li>
-                                <li><a href="#">Deep Dropdown 2</a></li>
-                                <li><a href="#">Deep Dropdown 3</a></li>
-                                <li><a href="#">Deep Dropdown 4</a></li>
-                                <li><a href="#">Deep Dropdown 5</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Dropdown 2</a></li>
-                        <li><a href="#">Dropdown 3</a></li>
-                        <li><a href="#">Dropdown 4</a></li>
-                    </ul>
-                </li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-
-        <a class="btn-getstarted" href="#about">Get Started</a>
-
-    </div>
-    </header>
-
-    <main class="main">
-
-        <section id="hero" class="d-flex align-items-center" style="background-color: #f0f4ff; padding-top: 100px;">
-            <style>
-                #hero {
-                    height: 100vh;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding-top: 5vh; /* urcă tot conținutul cu 5% din înălțimea ecranului */
-                    box-sizing: border-box;
-                }
-
-                    #hero .container {
-                        text-align: center;
-                        transform: translateY(-5vh); /* urcă conținutul mai mult */
-                    }
-            </style>
-
-            <div class="container text-center position-relative">
-                <h1 style="font-size: 2.5rem; color: #003366; font-weight: bold;">
-                    Bine ai venit la <span style="color:#005cbf;">LawHelp</span>
-                </h1>
-                <p style="font-size: 1.5rem; color: #444; margin-top: 20px;">
-                    Asistentul tău digital te ajută să <strong>eviți mersul la ghișeu</strong> și îți oferă răspunsuri juridice clare.
-                </p>
-
-                <a href="D:\HackTM2025\web_app\templates\indexAI.html" class="btn-get-started scrollto"
-                   style="background-color: #ffcc00; color: #000; font-weight: bold; font-size: 1.4rem; padding: 15px 30px; border-radius: 10px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                    Începe acum
-                </a>
-
-                <p style="font-size: 1rem; margin-top: 20px; color: #666;">
-                    Ușor de folosit. Gratuit. Fără cont. Fără ghișeu.
-                </p>
+                    <p class="mt-4 text-muted">
+                        Easy to use. Free. No account. No office visits.
+                    </p>
+                </div>
             </div>
         </section>
 
-        <section id="documente" style="min-height: 100vh; background-color: #f0f4ff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px 20px; box-sizing: border-box; font-family: 'Roboto', sans-serif; color: #003366; text-align: center;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: bold;">Încarcă documentul tău</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; color: #444;">
-                Poți adăuga documentele importante aici. Selectează fișierul și apasă pe „Încarcă”.
-            </p>
+        <!-- Forms Download Section -->
+        <section id="forms" class="forms-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
+                        Download Official Forms
+                    </h2>
+                    <p class="mb-5" style="font-size: 1.2rem; color: var(--text-gray); max-width: 700px; margin: 0 auto;">
+                        Find and quickly download the forms you need for various administrative procedures.
+                    </p>
+                </div>
 
-            <form id="upload-form" style="background: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px;">
-                <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 20px; font-size: 1rem;" />
-                <button type="submit" style="background-color: #005cbf; color: white; border: none; padding: 14px 0; font-size: 1.2rem; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; transition: background-color 0.3s ease;">
-                    Încarcă document
-                </button>
-                <div id="upload-message" style="margin-top: 20px; font-size: 1rem; display: none;"></div>
-            </form>
+                <!-- Swiper Container -->
+                <div class="swiper forms-swiper">
+                    <div class="swiper-wrapper">
+                        <!-- cerere Buletin -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-person-badge"></i>
+                                </div>
+                                <h3 class="form-card-title">ID Form</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance or renewal of the identity card.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_buletin.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- cerere Pașaport -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+                                <h3 class="form-card-title">Passport Form</h3>
+                                <p class="form-card-description">
+                                    Cerere pentru eliberarea pașaportului simplu electronic.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_pasaport.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Certificat Naștere -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-file-medical"></i>
+                                </div>
+                                <h3 class="form-card-title">Birth Certificate</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance of the birth certificate.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_certificat_nastere.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Certificat Căsătorie -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-heart"></i>
+                                </div>
+                                <h3 class="form-card-title">Marriage Certificate</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance of the marriage certificate.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_certificat_casatorie.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Cazier Judiciar -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <h3 class="form-card-title">Criminal Record Certificate</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance of the criminal record certificate.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_cazier_judiciar.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Permis de Conducere -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-car-front"></i>
+                                </div>
+                                <h3 class="form-card-title">Driver's License</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance or renewal of the driver's license.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_permis_conducere.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Certificat Fiscal -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-receipt"></i>
+                                </div>
+                                <h3 class="form-card-title">Tax Certificate</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance of the tax certificate.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_certificat_fiscal.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Adeverință Venit -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-cash-stack"></i>
+                                </div>
+                                <h3 class="form-card-title">Income Certificate</h3>
+                                <p class="form-card-description">
+                                    Application for the issuance of the income certificate.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_adeverinta_venit.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Înregistrare Firmă -->
+                        <div class="swiper-slide">
+                            <div class="form-card text-center">
+                                <div class="form-card-icon">
+                                    <i class="bi bi-building"></i>
+                                </div>
+                                <h3 class="form-card-title">Company Registration</h3>
+                                <p class="form-card-description">
+                                    Application for registering a new company.
+                                </p>
+                                <button class="download-btn" onclick="downloadForm('cerere_inregistrare_firma.pdf')">
+                                    <i class="bi bi-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
         </section>
 
-        <section id="documentelemele" style="background-color: #f0f4ff; padding: 30px 0;">
+        <!-- Documents Upload Section -->
+        <section id="documents" class="documents-section">
             <div class="container text-center">
-                <h2 class="mb-4">Documentele Mele</h2>
+                <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
+                    Upload Your Document
+                </h2>
+                <p class="mb-5" style="font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto 2rem;">
+                    You can add your important documents here. Select the file and click "Upload".
+                </p>
 
+                <form id="upload-form" class="upload-form">
+                    <div class="mb-3">
+                        <input type="file" id="fileInput" accept=".pdf" class="form-control" style="padding: 12px; font-size: 1rem;" />
+                    </div>
+                    <button type="submit" class="upload-btn" id="main-upload-btn">
+                        <span class="btn-text">Upload Document</span>
+                        <span class="btn-spinner" style="display: none;">
+                            <div class="spinner"></div> Uploading...
+                        </span>
+                    </button>
+                    <div id="upload-message" class="mt-3" style="display: none;"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Documents List Section -->
+        <section id="my-documents" class="py-5" style="background-color: var(--light-bg);">
+            <div class="container text-center">
+                <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
+                    My Documents
+                </h2>
                 <div id="no-documents-message" class="text-muted mb-4">
-                    <p>Niciun document încărcat.</p>
-                    <a href="#documente" class="btn btn-primary mt-2">Încarcă documentul dorit</a>
+                    <p>No documents uploaded.</p>
+                    <a href="#documents" class="btn btn-primary mt-2">Upload desired document</a>
                 </div>
 
-                <div id="document-list" class="row justify-content-center g-4">
-                    <!-- Documentele vor fi afișate aici -->
+                <div id="document-list" class="row justify-content-center g-4" style="max-width: 1000px; margin: 0 auto;">
+                    <!-- Documents will be displayed here -->
                 </div>
             </div>
         </section>
 
+        <!-- AI Assistant Section -->
+        <section id="assistant" class="assistant-section">
+            <div class="container">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
+                            AI Legal Assistant
+                        </h2>
+                    </div>
+
+                    <div class="chat-actions">
+                        <button id="chat-upload-btn" class="chat-upload-btn">
+                            <i class="bi bi-paperclip"></i> Upload Document
+                        </button>
+                        <input type="file" id="chat-file-input" accept=".pdf" class="hidden-file-input" />
+                    </div>
+
+                    <div id="chat-box" class="chat-box">
+                        <div class="message bot-message">
+                            <strong>LawHelp:</strong> Hello! I am LawHelp, how can I help you?
+                        </div>
+                    </div>
+
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div> LawHelp is thinking...
+                    </div>
+
+                    <div class="input-group-custom">
+                        <input type="text" id="message-input" class="message-input"
+                               placeholder="Write your question here..." />
+                        <button id="send-btn" class="send-btn">
+                            <i class="bi bi-send"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Footer -->
+    <footer class="footer-custom">
+        <div class="container">
+            <p class="m-0">&copy; 2025 DebugDivas. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
-
-    <!-- Vendor JS Files -->
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="static/vendor/php-email-form/validate.js"></script>
-    <script src="static/vendor/aos/aos.js"></script>
-    <script src="static/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="static/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="static/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-    <!-- Main JS File -->
-    <script src="static/js/main.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
 
     <script>
-        document.getElementById("chat-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const input = document.getElementById("userInput").value;
-
-            fetch("http://localhost:5000/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
+        // Initialize Swiper for Forms Section
+        document.addEventListener('DOMContentLoaded', function () {
+            const formsSwiper = new Swiper('.forms-swiper', {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
                 },
-                body: JSON.stringify({ message: input })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    const chatBox = document.getElementById("chat-response");
-                    chatBox.style.display = "block";
-                    chatBox.innerText = data.response;
-                })
-                .catch(err => {
-                    alert("Eroare la conectarea cu AI-ul.");
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 25,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                }
+            });
+
+            // Load documents when page loads
+            loadDocuments();
+
+            // Setup chat functionality
+            setupChat();
+        });
+
+        // Navigation Active State
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.btn-nav-white');
+
+            // Set active link based on scroll position
+            function setActiveLink() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPos = window.scrollY + 150;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
                 });
-        });</script>
-
-    <script>
-        // Preia toate linkurile din navbar
-        const navLinks = document.querySelectorAll('#navbar .btn-nav-white');
-
-        const currentPage = window.location.pathname.split('/').pop();
-
-        navLinks.forEach(link => {
-            // Extrage partea de href (ex: 'index.html')
-            const linkPage = link.getAttribute('href');
-
-            // Compară și adaugă clasa active dacă se potrivește
-            if (linkPage === currentPage) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
             }
-        });</script>
 
-    <script>
-        document.getElementById('upload-form').addEventListener('submit', function (e) {
-            e.preventDefault();
+            window.addEventListener('scroll', setActiveLink);
+            setActiveLink(); // Set initial active link
+        });
 
-            const fileInput = document.getElementById('fileInput');
-            const message = document.getElementById('upload-message');
+        // Form Download Functionality
+        function downloadForm(filename) {
+            // Create download link
+            const link = document.createElement('a');
+            link.href = `forms/${filename}`;
+            link.download = filename;
 
-            if (fileInput.files.length === 0) {
-                alert('Te rog selectează un document înainte de a încărca.');
+            // Trigger download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Show success message
+            showDownloadSuccess();
+
+            // Update button state temporarily
+            const button = event.target.closest('.download-btn');
+            const originalContent = button.innerHTML;
+            button.innerHTML = '<i class="bi bi-check"></i> Descărcat';
+            button.disabled = true;
+
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            }, 2000);
+        }
+
+        function showDownloadSuccess() {
+            const successDiv = document.getElementById('download-success');
+            if (successDiv) {
+                successDiv.style.display = 'block';
+                setTimeout(() => {
+                    successDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Document Upload Functionality
+        async function uploadFile(fileInput, showInChat = false) {
+            const file = fileInput.files[0];
+            if (!file) {
+                showMessage('Please select a document before uploading.', 'error', showInChat);
                 return;
             }
 
-            // Simulare upload, aici ar trebui logica pentru backend
-            message.style.color = 'green';
-            message.innerText = 'Documentul "' + fileInput.files[0].name + '" a fost încărcat cu succes!';
-            message.style.display = 'block';
+            // Show loading state
+            if (!showInChat) {
+                const uploadBtn = document.getElementById('main-upload-btn');
+                uploadBtn.disabled = true;
+                uploadBtn.querySelector('.btn-text').style.display = 'none';
+                uploadBtn.querySelector('.btn-spinner').style.display = 'inline-block';
+            }
 
-            // Reset input
-            fileInput.value = '';
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage(result.message, 'success', showInChat);
+                    // Reload documents list
+                    await loadDocuments();
+                } else {
+                    showMessage(`Error: ${result.error}`, 'error', showInChat);
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showMessage('Upload failed. Please try again.', 'error', showInChat);
+            } finally {
+                // Hide loading state
+                if (!showInChat) {
+                    const uploadBtn = document.getElementById('main-upload-btn');
+                    uploadBtn.disabled = false;
+                    uploadBtn.querySelector('.btn-text').style.display = 'inline';
+                    uploadBtn.querySelector('.btn-spinner').style.display = 'none';
+                }
+                fileInput.value = '';
+            }
+        }
+
+        // Show message function
+        function showMessage(message, type, inChat = false) {
+            if (inChat) {
+                addMessage(message, false);
+            } else {
+                const messageDiv = document.getElementById('upload-message');
+                messageDiv.className = `alert-custom ${type === 'success' ? 'alert-success' : 'alert-error'}`;
+                messageDiv.innerHTML = `
+                            <i class="bi bi-${type === 'success' ? 'check-circle' : 'x-circle'}"></i>
+                            ${message}
+                        `;
+                messageDiv.style.display = 'block';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Main upload form
+        document.getElementById('upload-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            uploadFile(fileInput, false);
         });
+
+        // Chat upload functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatUploadBtn = document.getElementById('chat-upload-btn');
+            const chatFileInput = document.getElementById('chat-file-input');
+
+            if (chatUploadBtn && chatFileInput) {
+                chatUploadBtn.addEventListener('click', function () {
+                    chatFileInput.click();
+                });
+
+                chatFileInput.addEventListener('change', function () {
+                    uploadFile(this, true);
+                });
+            }
+        });
+
+        // Load documents from database
+        async function loadDocuments() {
+            try {
+                const response = await fetch('/get_documents');
+                const data = await response.json();
+
+                if (response.ok) {
+                    renderDocumentsList(data.documents || []);
+                } else {
+                    console.error('Error loading documents:', data.error);
+                    renderDocumentsList([]);
+                }
+            } catch (error) {
+                console.error('Error loading documents:', error);
+                renderDocumentsList([]);
+            }
+        }
+
+        // Render documents list
+        function renderDocumentsList(documents) {
+            const documentList = document.getElementById('document-list');
+            const noDocsMessage = document.getElementById('no-documents-message');
+
+            if (!documents || documents.length === 0) {
+                documentList.innerHTML = '';
+                noDocsMessage.style.display = 'block';
+                return;
+            }
+
+            noDocsMessage.style.display = 'none';
+
+            documentList.innerHTML = documents.map(doc => `
+                        <div class="col-md-6 col-lg-4">
+                            <div class="document-box">
+                                <div class="document-header">
+                                    <h5 class="document-name">
+                                        <i class="bi bi-file-earmark-pdf text-danger"></i>
+                                        ${escapeHtml(doc.filename || 'Unknown Document')}
+                                    </h5>
+                                    <button class="remove-document" onclick="removeDocument(${doc.id}, '${escapeHtml(doc.filename || '')}')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="document-info">
+                                    <span class="document-type">${escapeHtml(doc.type || 'Document')}</span>
+                                </div>
+                                <div class="document-info">
+                                    <i class="bi bi-calendar"></i> ${doc.date || 'Unknown date'}
+                                </div>
+                                <div class="document-info">
+                                    <i class="bi bi-person"></i> ${escapeHtml(doc.owner || 'Unknown')}
+                                </div>
+                                ${doc.description ? `<div class="document-info"><i class="bi bi-info-circle"></i> ${escapeHtml(doc.description)}</div>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Remove document
+        async function removeDocument(docId, filename) {
+            if (!confirm(`Are you sure you want to delete "${filename}"?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/delete_document', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: docId })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage(result.message, 'success');
+                    await loadDocuments(); // Reload documents list
+                } else {
+                    showMessage(`Error deleting document: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting document:', error);
+                showMessage('Error deleting document. Please try again.', 'error');
+            }
+        }
+
+        // Chat functionality
+        function setupChat() {
+            const messageInput = document.getElementById('message-input');
+            const sendBtn = document.getElementById('send-btn');
+            const chatBox = document.getElementById('chat-box');
+            const loading = document.getElementById('loading');
+
+            if (!messageInput || !sendBtn || !chatBox || !loading) {
+                console.error('Chat elements not found');
+                return;
+            }
+
+            // Send message on button click
+            sendBtn.addEventListener('click', sendMessage);
+
+            // Send message on Enter key press
+            messageInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            async function sendMessage() {
+                const message = messageInput.value.trim();
+                if (!message) return;
+
+                // Add user message to chat
+                addMessage(message, true);
+                messageInput.value = '';
+
+                // Show loading
+                loading.style.display = 'block';
+                sendBtn.disabled = true;
+                messageInput.disabled = true;
+
+                try {
+                    const response = await fetch('/ask', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ query: message })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        addMessage(result.answer, false);
+                    } else {
+                        addMessage(`Error: ${result.error}`, false);
+                    }
+                } catch (error) {
+                    console.error('Chat error:', error);
+                    addMessage('Sorry, there was an error processing your request. Please try again later.', false);
+                } finally {
+                    loading.style.display = 'none';
+                    sendBtn.disabled = false;
+                    messageInput.disabled = false;
+                    messageInput.focus();
+                }
+            }
+        }
+
+        // Add message to chat
+        function addMessage(message, isUser) {
+            const chatBox = document.getElementById('chat-box');
+            if (!chatBox) return;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+            if (isUser) {
+                messageDiv.innerHTML = `<strong>You:</strong> ${escapeHtml(message)}`;
+            } else {
+                messageDiv.innerHTML = `<strong>LawHelp:</strong> ${escapeHtml(message)}`;
+            }
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
     </script>
-
-    <footer style="background-color: #004080; color: #ffffff; padding: 20px 0; text-align: center;">
-        <p style="margin: 0; font-size: 1rem;">&copy; 2025 DebugDivas. Toate drepturile rezervate.</p>
-    </footer>
-
 </body>
 
 </html>

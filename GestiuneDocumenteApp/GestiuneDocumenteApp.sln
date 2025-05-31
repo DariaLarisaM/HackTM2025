@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Version 21
+VisualStudioVersion = 17.14.36127.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Default|Any CPU = Default|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A79C88CA-C8C3-4D0B-8C30-86AA8A0CCAA5}.Debug|Any CPU.ActiveCfg = Default
+		{A79C88CA-C8C3-4D0B-8C30-86AA8A0CCAA5}.Default|Any CPU.ActiveCfg = Default
+		{A79C88CA-C8C3-4D0B-8C30-86AA8A0CCAA5}.Release|Any CPU.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EBC2617B-F52E-4F13-8F20-8003E7709EBA}
+	EndGlobalSection
+EndGlobal
