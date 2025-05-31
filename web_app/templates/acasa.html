@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <style>
+        .user-msg {
+            color: blue;
+            margin: 5px 0;
+        }
+
+        .bot-msg {
+            color: green;
+            margin: 5px 0;
+        }
+    </style>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+
+    <style>
+        .btn-nav-white {
+            background-color: transparent;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .btn-nav-white:hover {
+                background-color: #ffffff;
+                color: #004080;
+            }
+
+            .btn-nav-white.active {
+                background-color: #ffffff;
+                color: #004080;
+            }
+    </style>
+
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>LawHelp</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="static/img/favicon.png" rel="icon">
+    <link href="static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="static/vendor/aos/aos.css" rel="stylesheet">
+    <link href="static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="static/css/main.css" rel="stylesheet">
+
+</head>
+
+<script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+
+    async function sendQuery() {
+        const query = input.value.trim();
+        if (!query) return;
+
+        appendMessage('Tu: ' + query, 'user-msg');
+        input.value = '';
+        input.disabled = true;
+
+        try {
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query })
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                appendMessage('Bot: ' + data.answer, 'bot-msg');
+            } else {
+                appendMessage('Eroare: ' + (data.error || 'Răspuns invalid'), 'bot-msg');
+            }
+        } catch (error) {
+            appendMessage('Eroare la comunicare cu serverul.', 'bot-msg');
+        } finally {
+            input.disabled = false;
+            input.focus();
+        }
+    }
+
+    function appendMessage(text, className) {
+        const p = document.createElement('p');
+        p.textContent = text;
+        p.className = className;
+        chat.appendChild(p);
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendQuery();
+        }
+    });
+</script>
+
+
+<body class="acasa-page">
+
+    <header id="header" class="fixed-top" style="background-color: #004080; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px 0;">
+        <div class="container-fluid d-flex align-items-center justify-content-between px-5">
+
+
+            <!-- LawHelp text stânga -->
+            <a href="acasa.html" class="logo">
+                <h1 style="font-size: 1.8rem; font-weight: bold; color: #ffffff; margin: 0;">LawHelp</h1>
+            </a>
+
+            <!-- Navigație dreapta cu butoane albe -->
+            <nav id="navbar" class="navbar" style="margin-left: auto;">
+                <ul style="display: flex; gap: 15px; list-style: none; margin: 0; padding: 0;">
+                    <li><a href="#hero" class="btn-nav-white">Acasă</a></li>
+                    <li><a href="#documente" class="btn-nav-white">Documentele mele</a></li>
+                    <li><a href="http://127.0.0.1:5000" class="btn-nav-white">Asistent</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+        <a href="acasa.html" class="logo d-flex align-items-center me-auto">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="static/img/logo.webp" alt=""> -->
+            <h1 class="sitename">LawHelp</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li class="dropdown">
+                    <a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul>
+                        <li><a href="#">Dropdown 1</a></li>
+                        <li class="dropdown">
+                            <a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li><a href="#">Deep Dropdown 1</a></li>
+                                <li><a href="#">Deep Dropdown 2</a></li>
+                                <li><a href="#">Deep Dropdown 3</a></li>
+                                <li><a href="#">Deep Dropdown 4</a></li>
+                                <li><a href="#">Deep Dropdown 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Dropdown 2</a></li>
+                        <li><a href="#">Dropdown 3</a></li>
+                        <li><a href="#">Dropdown 4</a></li>
+                    </ul>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="btn-getstarted" href="#about">Get Started</a>
+
+    </div>
+    </header>
+
+    <main class="main">
+
+        <section id="hero" class="d-flex align-items-center" style="background-color: #f0f4ff; padding-top: 100px;">
+            <style>
+                #hero {
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding-top: 5vh; /* urcă tot conținutul cu 5% din înălțimea ecranului */
+                    box-sizing: border-box;
+                }
+
+                    #hero .container {
+                        text-align: center;
+                        transform: translateY(-5vh); /* urcă conținutul mai mult */
+                    }
+            </style>
+
+            <div class="container text-center position-relative">
+                <h1 style="font-size: 2.5rem; color: #003366; font-weight: bold;">
+                    Bine ai venit la <span style="color:#005cbf;">LawHelp</span>
+                </h1>
+                <p style="font-size: 1.5rem; color: #444; margin-top: 20px;">
+                    Asistentul tău digital te ajută să <strong>eviți mersul la ghișeu</strong> și îți oferă răspunsuri juridice clare.
+                </p>
+
+                <a href="D:\HackTM2025\web_app\templates\indexAI.html" class="btn-get-started scrollto"
+                   style="background-color: #ffcc00; color: #000; font-weight: bold; font-size: 1.4rem; padding: 15px 30px; border-radius: 10px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    Începe acum
+                </a>
+
+                <p style="font-size: 1rem; margin-top: 20px; color: #666;">
+                    Ușor de folosit. Gratuit. Fără cont. Fără ghișeu.
+                </p>
+            </div>
+        </section>
+
+        <section id="documente" style="min-height: 100vh; background-color: #f0f4ff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px 20px; box-sizing: border-box; font-family: 'Roboto', sans-serif; color: #003366; text-align: center;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: bold;">Încarcă documentul tău</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; color: #444;">
+                Poți adăuga documentele importante aici. Selectează fișierul și apasă pe „Încarcă”.
+            </p>
+
+            <form id="upload-form" style="background: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px;">
+                <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 20px; font-size: 1rem;" />
+                <button type="submit" style="background-color: #005cbf; color: white; border: none; padding: 14px 0; font-size: 1.2rem; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; transition: background-color 0.3s ease;">
+                    Încarcă document
+                </button>
+                <div id="upload-message" style="margin-top: 20px; font-size: 1rem; display: none;"></div>
+            </form>
+        </section>
+
+        <section id="documentelemele" style="background-color: #f0f4ff; padding: 30px 0;">
+            <div class="container text-center">
+                <h2 class="mb-4">Documentele Mele</h2>
+
+                <div id="no-documents-message" class="text-muted mb-4">
+                    <p>Niciun document încărcat.</p>
+                    <a href="#documente" class="btn btn-primary mt-2">Încarcă documentul dorit</a>
+                </div>
+
+                <div id="document-list" class="row justify-content-center g-4">
+                    <!-- Documentele vor fi afișate aici -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/php-email-form/validate.js"></script>
+    <script src="static/vendor/aos/aos.js"></script>
+    <script src="static/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="static/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="static/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="static/js/main.js"></script>
+
+    <script>
+        document.getElementById("chat-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const input = document.getElementById("userInput").value;
+
+            fetch("http://localhost:5000/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: input })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    const chatBox = document.getElementById("chat-response");
+                    chatBox.style.display = "block";
+                    chatBox.innerText = data.response;
+                })
+                .catch(err => {
+                    alert("Eroare la conectarea cu AI-ul.");
+                });
+        });</script>
+
+    <script>
+        // Preia toate linkurile din navbar
+        const navLinks = document.querySelectorAll('#navbar .btn-nav-white');
+
+        const currentPage = window.location.pathname.split('/').pop();
+
+        navLinks.forEach(link => {
+            // Extrage partea de href (ex: 'index.html')
+            const linkPage = link.getAttribute('href');
+
+            // Compară și adaugă clasa active dacă se potrivește
+            if (linkPage === currentPage) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });</script>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('fileInput');
+            const message = document.getElementById('upload-message');
+
+            if (fileInput.files.length === 0) {
+                alert('Te rog selectează un document înainte de a încărca.');
+                return;
+            }
+
+            // Simulare upload, aici ar trebui logica pentru backend
+            message.style.color = 'green';
+            message.innerText = 'Documentul "' + fileInput.files[0].name + '" a fost încărcat cu succes!';
+            message.style.display = 'block';
+
+            // Reset input
+            fileInput.value = '';
+        });
+    </script>
+
+    <footer style="background-color: #004080; color: #ffffff; padding: 20px 0; text-align: center;">
+        <p style="margin: 0; font-size: 1rem;">&copy; 2025 DebugDivas. Toate drepturile rezervate.</p>
+    </footer>
+
+</body>
+
+</html>
