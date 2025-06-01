@@ -7,8 +7,10 @@ import os
 import pyodbc
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from flask import send_from_directory
 
-UPLOAD_FOLDER = 'docs'
+UPLOAD_FOLDER = 'data'
+LLM_DOCS_FOLDER = 'docs' 
 ALLOWED_EXTENSIONS = {'pdf'}
 
 app = Flask(__name__)
@@ -20,14 +22,14 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 # Conexiune la baza de date SQL Server - actualizată pentru GestiuneDocumente
 conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
-                      'Server=localhost\\SQLEXPRESS;'  # Connection string corect
+                      'Server=localhost\\SQLEXPRESS;'
                       'Database=GestiuneDocumente;'
                       'Trusted_Connection=yes;')
 cursor = conn.cursor()
 
 # LangChain
 def initialize_langchain():
-    loader = DirectoryLoader(UPLOAD_FOLDER, glob="*.pdf")
+    loader = DirectoryLoader(LLM_DOCS_FOLDER, glob="*.pdf")
     documents = loader.load()
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     vectorstore = Chroma(persist_directory="embeddings", embedding_function=embedding_model)
@@ -73,6 +75,21 @@ def get_documents():
         return jsonify({"documents": doc_list})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/pdf/<int:document_id>')
+def serve_pdf(document_id):
+    try:
+        cursor.execute("SELECT numar_document FROM Documente WHERE id_document = ?", document_id)
+        result = cursor.fetchone()
+
+        if result:
+            filename = result.numar_document
+            return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+        else:
+            return "Documentul nu a fost găsit", 404
+    except Exception as e:
+        return f"Eroare la încărcarea documentului: {str(e)}", 500
+
 
 @app.route('/delete_document', methods=['POST'])
 def delete_document():

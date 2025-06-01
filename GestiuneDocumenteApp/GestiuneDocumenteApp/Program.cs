@@ -68,7 +68,7 @@ namespace GestiuneDocumenteApp
 
         static void AdaugaDocument(int idTip, int idPersoana, string numar, DateTime dataEmitere, string descriere, string caleSursaFisier)
         {
-            string caleFolderPDF = @"C:\DocumentePDF";
+            string caleFolderPDF = @"D:/HackTM2025/web_app/docs";
             Directory.CreateDirectory(caleFolderPDF); // asigură că folderul există
 
             string numeFisier = Path.GetFileName(caleSursaFisier);

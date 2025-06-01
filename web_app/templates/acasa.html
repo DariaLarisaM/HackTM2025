@@ -75,7 +75,8 @@
         /* Hero Section */
         .hero-section {
             height: 100vh;
-            background-color: var(--light-bg);
+            background: linear-gradient(rgba(240, 244, 255, 0.9), rgba(240, 244, 255, 0.9)), url('/static/img/hero-bg.jpg') no-repeat center center;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -92,12 +93,14 @@
             color: var(--text-dark);
             font-weight: bold;
             margin-bottom: 20px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .hero-subtitle {
             font-size: 1.5rem;
             color: var(--text-gray);
             margin-bottom: 30px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .btn-start {
@@ -128,10 +131,26 @@
 
         /* Swiper Styles for Forms */
         .forms-swiper {
-            padding: 40px 0 80px 0;
+            padding: 40px 80px 80px 80px;
             overflow: hidden;
             max-width: 100%;
+            position: relative;
         }
+
+            .forms-swiper .swiper-wrapper {
+                overflow: visible;
+            }
+
+            .forms-swiper .swiper-slide {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .forms-swiper .swiper-slide-active,
+            .forms-swiper .swiper-slide-next,
+            .forms-swiper .swiper-slide-prev {
+                opacity: 1;
+            }
 
             .forms-swiper .swiper-wrapper {
                 align-items: stretch;
@@ -209,17 +228,18 @@
                 cursor: not-allowed;
             }
 
-        /* Custom Swiper Navigation */
+        /* Custom Swiper Navigation - Moved outside */
         .swiper-button-next,
         .swiper-button-prev {
             background: var(--light-blue);
             border-radius: 50%;
-            width: 50px !important;
-            height: 50px !important;
-            margin-top: -25px;
+            width: 60px !important;
+            height: 60px !important;
+            margin-top: -30px;
             color: white !important;
             font-weight: bold;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
             .swiper-button-next:hover,
@@ -230,15 +250,15 @@
 
             .swiper-button-next:after,
             .swiper-button-prev:after {
-                font-size: 18px !important;
+                font-size: 20px !important;
             }
 
         .swiper-button-next {
-            right: 20px;
+            right: 10px;
         }
 
         .swiper-button-prev {
-            left: 20px;
+            left: 10px;
         }
 
         /* Custom Pagination */
@@ -260,7 +280,7 @@
             bottom: 20px !important;
         }
 
-        /* Documents Upload Section */
+        /* Documents Section - Combined Upload and List */
         .documents-section {
             min-height: 100vh;
             background-color: var(--light-bg);
@@ -273,7 +293,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             max-width: 500px;
-            margin: 0 auto;
+            margin: 0 auto 50px;
         }
 
         .upload-btn {
@@ -336,10 +356,14 @@
             font-weight: 500;
         }
 
-        .remove-document {
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-document, .remove-document {
             background: none;
             border: none;
-            color: #dc3545;
             font-size: 1.2rem;
             cursor: pointer;
             padding: 5px;
@@ -347,10 +371,81 @@
             transition: all 0.3s ease;
         }
 
+        .view-document {
+            color: var(--light-blue);
+        }
+
+            .view-document:hover {
+                background-color: var(--light-blue);
+                color: white;
+            }
+
+        .remove-document {
+            color: #dc3545;
+        }
+
             .remove-document:hover {
                 background-color: #dc3545;
                 color: white;
             }
+
+        /* PDF Viewer Modal */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .pdf-modal-content {
+            position: relative;
+            background-color: white;
+            margin: 2% auto;
+            padding: 0;
+            width: 90%;
+            height: 90%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .pdf-modal-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+            .pdf-close:hover {
+                background-color: rgba(255,255,255,0.2);
+            }
+
+        .pdf-viewer {
+            width: 100%;
+            height: calc(100% - 60px);
+            border: none;
+        }
 
         /* AI Assistant Section */
         .assistant-section {
@@ -574,20 +669,38 @@
                 margin-bottom: 20px;
             }
 
+            .forms-swiper {
+                padding: 40px 60px 80px 60px;
+            }
+
             .swiper-button-next,
             .swiper-button-prev {
-                width: 40px !important;
-                height: 40px !important;
-                margin-top: -20px;
+                width: 50px !important;
+                height: 50px !important;
+                margin-top: -25px;
             }
 
                 .swiper-button-next:after,
                 .swiper-button-prev:after {
-                    font-size: 14px !important;
+                    font-size: 16px !important;
                 }
+
+            .swiper-button-next {
+                right: 5px;
+            }
+
+            .swiper-button-prev {
+                left: 5px;
+            }
 
             .document-box {
                 padding: 15px;
+            }
+
+            .pdf-modal-content {
+                width: 95%;
+                height: 95%;
+                margin: 2.5% auto;
             }
         }
 
@@ -609,6 +722,19 @@
 </head>
 
 <body>
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="pdf-modal">
+        <div class="pdf-modal-content">
+            <div class="pdf-modal-header">
+                <h3 id="pdfModalTitle">Document Viewer</h3>
+                <button class="pdf-close" onclick="closePdfModal()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+            <iframe id="pdfViewer" class="pdf-viewer" src=""></iframe>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header-custom">
         <div class="container-fluid d-flex align-items-center justify-content-between px-5">
@@ -829,44 +955,44 @@
             </div>
         </section>
 
-        <!-- Documents Upload Section -->
+        <!-- Documents Section - Combined Upload and List -->
         <section id="documents" class="documents-section">
-            <div class="container text-center">
-                <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
-                    Upload Your Document
-                </h2>
-                <p class="mb-5" style="font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto 2rem;">
-                    You can add your important documents here. Select the file and click "Upload".
-                </p>
+            <div class="container">
+                <!-- Upload Form -->
+                <div class="text-center mb-5">
+                    <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
+                        Upload Your Document
+                    </h2>
+                    <p class="mb-5" style="font-size: 1.2rem; color: var(--text-gray); max-width: 600px; margin: 0 auto 2rem;">
+                        You can add your important documents here. Select the file and click "Upload".
+                    </p>
 
-                <form id="upload-form" class="upload-form">
-                    <div class="mb-3">
-                        <input type="file" id="fileInput" accept=".pdf" class="form-control" style="padding: 12px; font-size: 1rem;" />
-                    </div>
-                    <button type="submit" class="upload-btn" id="main-upload-btn">
-                        <span class="btn-text">Upload Document</span>
-                        <span class="btn-spinner" style="display: none;">
-                            <div class="spinner"></div> Uploading...
-                        </span>
-                    </button>
-                    <div id="upload-message" class="mt-3" style="display: none;"></div>
-                </form>
-            </div>
-        </section>
-
-        <!-- Documents List Section -->
-        <section id="my-documents" class="py-5" style="background-color: var(--light-bg);">
-            <div class="container text-center">
-                <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
-                    My Documents
-                </h2>
-                <div id="no-documents-message" class="text-muted mb-4">
-                    <p>No documents uploaded.</p>
-                    <a href="#documents" class="btn btn-primary mt-2">Upload desired document</a>
+                    <form id="upload-form" class="upload-form">
+                        <div class="mb-3">
+                            <input type="file" id="fileInput" accept=".pdf" class="form-control" style="padding: 12px; font-size: 1rem;" />
+                        </div>
+                        <button type="submit" class="upload-btn" id="main-upload-btn">
+                            <span class="btn-text">Upload Document</span>
+                            <span class="btn-spinner" style="display: none;">
+                                <div class="spinner"></div> Uploading...
+                            </span>
+                        </button>
+                        <div id="upload-message" class="mt-3" style="display: none;"></div>
+                    </form>
                 </div>
 
-                <div id="document-list" class="row justify-content-center g-4" style="max-width: 1000px; margin: 0 auto;">
-                    <!-- Documents will be displayed here -->
+                <!-- Documents List -->
+                <div class="text-center">
+                    <h2 class="mb-4" style="font-size: 2.5rem; color: var(--text-dark); font-weight: bold;">
+                        My Documents
+                    </h2>
+                    <div id="no-documents-message" class="text-muted mb-4">
+                        <p>No documents uploaded.</p>
+                    </div>
+
+                    <div id="document-list" class="row justify-content-center g-4" style="max-width: 1000px; margin: 0 auto;">
+                        <!-- Documents will be displayed here -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -929,6 +1055,7 @@
                 slidesPerView: 3,
                 spaceBetween: 30,
                 loop: true,
+                centeredSlides: true,
                 autoplay: {
                     delay: 4000,
                     disableOnInteraction: false,
@@ -945,14 +1072,17 @@
                     320: {
                         slidesPerView: 1,
                         spaceBetween: 20,
+                        centeredSlides: true,
                     },
                     640: {
                         slidesPerView: 2,
                         spaceBetween: 25,
+                        centeredSlides: false,
                     },
                     1024: {
                         slidesPerView: 3,
                         spaceBetween: 30,
+                        centeredSlides: true,
                     },
                 }
             });
@@ -993,17 +1123,11 @@
             setActiveLink(); // Set initial active link
         });
 
-        // Form Download Functionality
+        // Form Download Functionality - Opens in new tab
         function downloadForm(filename) {
-            // Create download link
-            const link = document.createElement('a');
-            link.href = `forms/${filename}`;
-            link.download = filename;
-
-            // Trigger download
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Open form in new tab
+            const formUrl = `/static/forms/${filename}`;
+            window.open(formUrl, '_blank');
 
             // Show success message
             showDownloadSuccess();
@@ -1011,7 +1135,7 @@
             // Update button state temporarily
             const button = event.target.closest('.download-btn');
             const originalContent = button.innerHTML;
-            button.innerHTML = '<i class="bi bi-check"></i> Descărcat';
+            button.innerHTML = '<i class="bi bi-check"></i> Downloaded';
             button.disabled = true;
 
             setTimeout(() => {
@@ -1029,6 +1153,45 @@
                 }, 3000);
             }
         }
+
+        // PDF Modal Functions
+        function openPdfModal(filename, documentId) {
+            const modal = document.getElementById('pdfModal');
+            const viewer = document.getElementById('pdfViewer');
+            const title = document.getElementById('pdfModalTitle');
+
+            title.textContent = filename;
+            viewer.src = `/pdf/${documentId}`;
+            modal.style.display = 'block';
+
+            // Prevent body scrolling when modal is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePdfModal() {
+            const modal = document.getElementById('pdfModal');
+            const viewer = document.getElementById('pdfViewer');
+
+            modal.style.display = 'none';
+            viewer.src = '';
+
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of it
+        document.getElementById('pdfModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closePdfModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closePdfModal();
+            }
+        });
 
         // Document Upload Functionality
         async function uploadFile(fileInput, showInChat = false) {
@@ -1087,9 +1250,9 @@
                 const messageDiv = document.getElementById('upload-message');
                 messageDiv.className = `alert-custom ${type === 'success' ? 'alert-success' : 'alert-error'}`;
                 messageDiv.innerHTML = `
-                            <i class="bi bi-${type === 'success' ? 'check-circle' : 'x-circle'}"></i>
-                            ${message}
-                        `;
+                                <i class="bi bi-${type === 'success' ? 'check-circle' : 'x-circle'}"></i>
+                                ${message}
+                            `;
                 messageDiv.style.display = 'block';
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
@@ -1152,30 +1315,35 @@
             noDocsMessage.style.display = 'none';
 
             documentList.innerHTML = documents.map(doc => `
-                        <div class="col-md-6 col-lg-4">
-                            <div class="document-box">
-                                <div class="document-header">
-                                    <h5 class="document-name">
-                                        <i class="bi bi-file-earmark-pdf text-danger"></i>
-                                        ${escapeHtml(doc.filename || 'Unknown Document')}
-                                    </h5>
-                                    <button class="remove-document" onclick="removeDocument(${doc.id}, '${escapeHtml(doc.filename || '')}')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="document-box">
+                                    <div class="document-header">
+                                        <h5 class="document-name">
+                                            <i class="bi bi-file-earmark-pdf text-danger"></i>
+                                            ${escapeHtml(doc.filename || 'Unknown Document')}
+                                        </h5>
+                                        <div class="document-actions">
+                                            <button class="view-document" onclick="openPdfModal('${escapeHtml(doc.filename || '')}', ${doc.id})" title="View Document">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="remove-document" onclick="removeDocument(${doc.id}, '${escapeHtml(doc.filename || '')}')" title="Delete Document">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="document-info">
+                                        <span class="document-type">${escapeHtml(doc.type || 'Document')}</span>
+                                    </div>
+                                    <div class="document-info">
+                                        <i class="bi bi-calendar"></i> ${doc.date || 'Unknown date'}
+                                    </div>
+                                    <div class="document-info">
+                                        <i class="bi bi-person"></i> ${escapeHtml(doc.owner || 'Unknown')}
+                                    </div>
+                                    ${doc.description ? `<div class="document-info"><i class="bi bi-info-circle"></i> ${escapeHtml(doc.description)}</div>` : ''}
                                 </div>
-                                <div class="document-info">
-                                    <span class="document-type">${escapeHtml(doc.type || 'Document')}</span>
-                                </div>
-                                <div class="document-info">
-                                    <i class="bi bi-calendar"></i> ${doc.date || 'Unknown date'}
-                                </div>
-                                <div class="document-info">
-                                    <i class="bi bi-person"></i> ${escapeHtml(doc.owner || 'Unknown')}
-                                </div>
-                                ${doc.description ? `<div class="document-info"><i class="bi bi-info-circle"></i> ${escapeHtml(doc.description)}</div>` : ''}
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
         }
 
         // Escape HTML to prevent XSS
